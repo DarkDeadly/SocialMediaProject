@@ -81,10 +81,19 @@ const GetUser = HandleAsync(async (req, res) => {
   return res.status(200).json({ success: true, user });
 });
 
+const LogoutUser = HandleAsync(async(req , res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict"
+  });
+  return res.status(200).json({ success: true, message: "Logged out successfully" });
+})
+
 const SignJwt = (id) => {
   return JWT.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
 };
 
-module.exports = { RegisterUser, LoginUser, GetUser };
+module.exports = { RegisterUser, LoginUser, GetUser ,LogoutUser };
