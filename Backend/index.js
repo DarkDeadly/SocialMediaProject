@@ -3,6 +3,7 @@ require("dotenv").config()
 const cookieParser = require("cookie-parser")
 const DbConnection = require("./config/db")
 const userRouter = require('./routes/userRoute')
+const postRouter = require("./routes/postRoute")
 const cors = require("cors")
 DbConnection()
 const app = express()
@@ -18,6 +19,7 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'], 
 }))
 app.use("/auth" , userRouter)
+app.use('/post' , postRouter)
 
 app.listen(port , () => {
     console.log(`listening to port ${port}`)
